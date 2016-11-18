@@ -1,0 +1,5 @@
+# models.hist.txt: This is where I am manually documenting certain insightful models.
+
+Index of solutions
+"ksb" stands for kaggle santander bank.  I will name all of my models as ksb_XXX.
+ksb_random: Use a random number generator to create the score.
