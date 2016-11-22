@@ -9,9 +9,8 @@ library("rpart.plot")
 library("RColorBrewer")
 #install.packages('randomForest')
 library("randomForest")
-install.packages("Amelia")
+#install.packages("Amelia")
 library('Amelia') # has mismap which quickly checks for missing values
-
 library("rpart")
 
 # end Libraries **************
@@ -42,9 +41,17 @@ model.perf <- function(x){
 output_for_kaggle <- function(my_model, mtype, outputname){
   # my_model is the actual model object.  mtype is the char string that needs to go in the predict type param. outputname eg "my_solution.csv".
   my_testprediction <- predict(my_model, test, type = mtype)
-  my_solution <- data.frame(PassengerId = test$PassengerId, Survived = as.integer(round(my_testprediction)))
+  my_solution <- data.frame(ndcodpers = test$ndcopers, added_products = as.character(my_testprediction))
   write.csv(my_solution, file = outputname, row.names = FALSE) 
 }
+
+for (i in 1:24){
+if (df[,i]==1){ df$[,i+24] <- "ind_ahor_fin_ult1"}
+  else {df[,i]==2 then df$[,i+24] <- "ind_aval_fin_ult1"}
+  else {df[,i]==3 then df$[,i+24] <- "ind_cco_fin_ult1"}
+  else {df[,i]==4 then df$[,i+24] <- "ind_cder_fin_ult1"}
+}
+
 
 set.seed(111) 
 
@@ -53,16 +60,20 @@ set.seed(111)
 # Import Data ****************
 
 # Import the training set: train
-train_samp_location <- "../train_ver2_samp.csv"
+#train_samp_location <- "../train_ver2_tenpct_samp.csv"
+train_samp_location <- "../train_ver2_onepct_samp.csv"
 train_samp <- read.csv(train_samp_location, header = TRUE)
 # Import the testing set: test
-test_location <- "../test_ver2.csv"
-test <- read.csv(test_location, header = TRUE)
+# NOTE: Only uncomment the next few lines if you need to do the genvar on test as well (when getting a submission ready)
+#test_location <- "../test_ver2.csv"
+#test <- read.csv(test_location, header = TRUE)
 
 # Combine into all_data
-test$Survived <- NA
-all_data <- rbind(train, test)
-rm(train_samp,test)
+#test$Survived <- NA
+#all_data <- rbind(train, test)
+all_data <- train_samp
+#rm(train_samp,test)
+rm(train_samp)
 
 # Confirm by printing a few rows to console
 str(all_data)
@@ -72,15 +83,13 @@ head(all_data, 10L)
 
 # Data Cleansing ******************
 
-all_data$Embarked[c(62,830)] = "S"
-all_data$Embarked <- factor(all_data$Embarked)
-
-all_data$Fare[1044] <- median(all_data$Fare, na.rm = TRUE)
+#all_data$Embarked[c(62,830)] = "S"
+#all_data$Embarked <- factor(all_data$Embarked)
+#all_data$Fare[1044] <- median(all_data$Fare, na.rm = TRUE)
 
 # Deal with missing Ages
-predicted_age <- rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + family_size, data=all_data[!is.na(all_data$Age),], method="anova")
-all_data$Age[is.na(all_data$Age)] <- predict(predicted_age, all_data[is.na(all_data$Age),])
-
+#predicted_age <- rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title + family_size, data=all_data[!is.na(all_data$Age),], method="anova")
+#all_data$Age[is.na(all_data$Age)] <- predict(predicted_age, all_data[is.na(all_data$Age),])
 
 # end Data Cleansing ******************
 
