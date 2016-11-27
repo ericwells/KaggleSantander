@@ -3,7 +3,7 @@ This is my R code for working on the Santander competition in Fall 2016 on Kaggl
 
 Each working file has an explanatory comment at the top of it.
 
-Files should be run in this order:
+Files should generally be run in this order:
 1) first data must be downloaded from Kaggle.
 2) datasampling.R
 3) explore.R (optional)

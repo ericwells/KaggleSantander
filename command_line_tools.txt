@@ -1,0 +1,27 @@
+# These are the command line tools I have been using in the Kaggle Santander competition.
+
+SCRATCHPAD
+awk -F, '$1="2016-05-28" {print >$1}' train_ver2.csv
+
+perl -n -e 'print if(rand()<.01||$.==1)' < test_ver2.csv > test_ver2_onepct_samp.csv
+awk -F, '{print $2}' test_ver2_onepct_samp.csv > test_ver2_onepct_ncodpers.csv
+
+# The next four lines actually generated my first successful Kaggle Santander submission!  0.0089792, position 812
+awk -F, '{print $2}' test_ver2.csv > test_ver2_ncodpers.csv
+wc -l test_ver2_ncodpers.csv
+awk -F, '$1 != "\"ncodpers\"" {print $1}' test_ver2_ncodpers.csv > junk2.csv
+awk -F, 'BEGIN {  print "ncodpers,added_products" }{  print $1 ",ind_tjcr_fin_ult1 ind_deco_fin_ult1 ind_recibo_ult1 ind_ecue_fin_ult1 ind_hip_fin_ult1 ind_ahor_fin_ult1 ind_cco_fin_ult1" }' junk2.csv > my_solution.csv
+
+
+# Now trying to get the most popular products as of Month 16.
+awk -F"," 'BEGIN {FS=OFS=","} {for (i=1; i<=NF; i++) a[i]+=$i } END {for (j=1; j<=NF; j++) printf a[j] OFS;printf "\n"}' Month16PerfOnlyTrimmed.csv > M16ColumnCts.txt
+From pulling the counts into Numbers and sorting...
+ind_cco_fin_ult1 ind_ahor_fin_ult1 ind_recibo_ult1 ind_ctop_fin_ult1 ind_ecue_fin_ult1 ind_cno_fin_ult1 ind_nom_pens_ult1
+
+# The next four lines generated my submission that is just based on freqing the top products as of Month 16.  0.0137986, position 743
+awk -F, '{print $2}' test_ver2.csv > test_ver2_ncodpers.csv
+wc -l test_ver2_ncodpers.csv
+awk -F, '$1 != "\"ncodpers\"" {print $1}' test_ver2_ncodpers.csv > junk2.csv
+awk -F, 'BEGIN {  print "ncodpers,added_products" }{  print $1 ",ind_cco_fin_ult1 ind_ahor_fin_ult1 ind_recibo_ult1 ind_ctop_fin_ult1 ind_ecue_fin_ult1 ind_cno_fin_ult1 ind_nom_pens_ult1" }' junk2.csv > my_solution.csv
+
+# The next "model" will be the same but no deduping on products the customer already has in M16 *and* creating a model for brand new customers.
