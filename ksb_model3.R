@@ -7,9 +7,9 @@ setwd("/Users/ericwells/Documents/KaggleSantander/myCodeForKaggleSantander")
 # Read in Month18and17SortedNoHeader.csv
 # test version
 col_names = c("C1","C2","C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24","C25","C26","C27","C28","C29","C30","C31","C32","C33","C34","C35","C36","C37","C38","C39","C40","C41","C42","C43","C44","C45","C46","C47","C48","C49","C50","C51","C52","C53","C54","C55","C56","C57","C58","C59","C60","C61","C62","C63","C64","C65","C66","C67","C68","C69","C70","C71")
-location <- "../Joins/M18and17SortedNoHeader_head200.csv"
+#location <- "../Joins/M18and17SortedNoHeader_head200.csv"
 # full version
-#location <- "./Joins/M18and17SortedNoHeader.csv"
+location <- "../Joins/M18and17SortedNoHeader.csv"
 input <- read.csv(location, stringsAsFactors=FALSE, header = FALSE, col.names = col_names)
 
 # Create the new columns that contain the Product Probabilities (if they are not already on the input dataset...).
@@ -41,7 +41,7 @@ input$M18Pr24 <- .22
 head(input)
 
 # Create the dataframe with just the columns I need and name the columns.
-df <- data.frame(ID=input$C1, M17P1=input$C48, M17P2=input$C49, M17P3=input$C50, M17P4=input$C51, M17P5=input$C52, M17P6=input$C53, M17P7=input$C54, M17P8=input$C55, M17P9=input$C56, M17P10=input$C57, M17P11=input$C58, M17P12=input$C59, M17P13=input$C60, M17P14=input$C61, M17P15=input$C62, M17P16=input$C63, M17P17=input$C64, M17P18=input$C65, M17P19=input$C66, M17P20=input$C67, M17P21=input$C68, M17P22=input$C69, M17P23=input$C70, M17P24=input$C71,
+df <- data.frame(ncodpers=input$C1, M17P1=input$C48, M17P2=input$C49, M17P3=input$C50, M17P4=input$C51, M17P5=input$C52, M17P6=input$C53, M17P7=input$C54, M17P8=input$C55, M17P9=input$C56, M17P10=input$C57, M17P11=input$C58, M17P12=input$C59, M17P13=input$C60, M17P14=input$C61, M17P15=input$C62, M17P16=input$C63, M17P17=input$C64, M17P18=input$C65, M17P19=input$C66, M17P20=input$C67, M17P21=input$C68, M17P22=input$C69, M17P23=input$C70, M17P24=input$C71,
 	M18Pr1=input$M18Pr1, M18Pr2=input$M18Pr2, M18Pr3=input$M18Pr3, M18Pr4=input$M18Pr4, M18Pr5=input$M18Pr5, M18Pr6=input$M18Pr6, M18Pr7=input$M18Pr7, M18Pr8=input$M18Pr8, M18Pr9=input$M18Pr9, M18Pr10=input$M18Pr10, M18Pr11=input$M18Pr11, M18Pr12=input$M18Pr12, M18Pr13=input$M18Pr13, M18Pr14=input$M18Pr14, M18Pr15=input$M18Pr15, M18Pr16=input$M18Pr16, M18Pr17=input$M18Pr17, M18Pr18=input$M18Pr18, M18Pr19=input$M18Pr19, M18Pr20=input$M18Pr20, M18Pr21=input$M18Pr21, M18Pr22=input$M18Pr22, M18Pr23=input$M18Pr23, M18Pr24=input$M18Pr24)
 
 head(df)
@@ -95,8 +95,8 @@ get.ordered.recommendations <- function(df) {
 	return(output)
 }
 
-# Create the added_product column.
-df$added_product <- get.ordered.recommendations(df)
+# Create the added_products column.
+df$added_products <- get.ordered.recommendations(df)
 
 # Take a look...
 head(df)

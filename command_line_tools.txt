@@ -22,6 +22,7 @@ awk -F, '$1 != "\"ncodpers\"" {print $1}' test_ver2_ncodpers.csv > junk2.csv
 awk -F, 'BEGIN {  print "ncodpers,added_products" }{  print $1 ",ind_cco_fin_ult1 ind_ahor_fin_ult1 ind_recibo_ult1 ind_ctop_fin_ult1 ind_ecue_fin_ult1 ind_cno_fin_ult1 ind_nom_pens_ult1" }' junk2.csv > my_solution.csv
 
 # The next "model" will be the same but no deduping on products the customer already has in M16 *and* creating a model for brand new customers.
+
 Need to join M18 and M17.
 Get rid of header row:
 tail -n +2 oldfile >newfile
@@ -33,6 +34,7 @@ join -t, -1 2 -2 2 -v1 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > new
 Then join to get the customers who are on M18 and M17.
 join -t"," -1 2 -2 2 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > M18and17SortedNoHeader.csv # inner join
 
+Now switch to XXX.R
 
 SCRATCHPAD
 awk -F, '$1="2016-05-28" {print >$1}' train_ver2.csv
