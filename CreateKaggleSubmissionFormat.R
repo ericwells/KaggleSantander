@@ -14,7 +14,7 @@
 #df
 
 # read in test file that Santander gave out
-test_location <- "../test_ver2.csv"
+test_location <- "../test_ver2_onepct_samp.csv"
 df <- read.csv(test_location, header = TRUE)
 
 # only keep last two months as two separate data frames

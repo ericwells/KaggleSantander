@@ -1,10 +1,7 @@
 # These are the command line tools I have been using in the Kaggle Santander competition.
 
-SCRATCHPAD
-awk -F, '$1="2016-05-28" {print >$1}' train_ver2.csv
-
-perl -n -e 'print if(rand()<.01||$.==1)' < test_ver2.csv > test_ver2_onepct_samp.csv
-awk -F, '{print $2}' test_ver2_onepct_samp.csv > test_ver2_onepct_ncodpers.csv
+# This is how I take just a single month out of train_ver2.csv
+awk -F, 'BEGIN {OFS=","} $1=="2016-05-28" {print $0}' train_ver2.csv > Joins/Month17.csv
 
 # The next four lines actually generated my first successful Kaggle Santander submission!  0.0089792, position 812
 awk -F, '{print $2}' test_ver2.csv > test_ver2_ncodpers.csv
@@ -25,3 +22,23 @@ awk -F, '$1 != "\"ncodpers\"" {print $1}' test_ver2_ncodpers.csv > junk2.csv
 awk -F, 'BEGIN {  print "ncodpers,added_products" }{  print $1 ",ind_cco_fin_ult1 ind_ahor_fin_ult1 ind_recibo_ult1 ind_ctop_fin_ult1 ind_ecue_fin_ult1 ind_cno_fin_ult1 ind_nom_pens_ult1" }' junk2.csv > my_solution.csv
 
 # The next "model" will be the same but no deduping on products the customer already has in M16 *and* creating a model for brand new customers.
+Need to join M18 and M17.
+Get rid of header row:
+tail -n +2 oldfile >newfile
+Then sort:
+sort -t, -n -k2,2 Month17NoHeader.csv > Month17SortedNoHeader.csv
+wc -l Month17SortedNoHeader.csv
+Then join to get the customers who are only on M18.
+join -t, -1 2 -2 2 -v1 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > newcustsM18.csv # Whoa.  There don't appear to be any.
+Then join to get the customers who are on M18 and M17.
+join -t"," -1 2 -2 2 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > M18and17SortedNoHeader.csv # inner join
+
+
+SCRATCHPAD
+awk -F, '$1="2016-05-28" {print >$1}' train_ver2.csv
+
+perl -n -e 'print if(rand()<.01||$.==1)' < test_ver2.csv > test_ver2_onepct_samp.csv
+awk -F, '{print $2}' test_ver2_onepct_samp.csv > test_ver2_onepct_ncodpers.csv
+
+perl -n -e 'print if($1=='2016-05-28')' < train_ver2.csv > Joins/Month17.csv
+perl -n -e 'print if($fields[0]=="251308")' < a2 > a5
