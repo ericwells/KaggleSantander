@@ -5,5 +5,4 @@ Index of solutions
 ksb_random: Use a random number generator to create the score.
 ksb_model1: just a junk model to test the ability to successfully submit on Kaggle.  I built the solution using command line tools.  I just used a guess as to what products are common and submitted that as the entry for every record.  Got position 812 on the leaderboard with performance of 0.0089792.
 ksb_model2: a "model" (if you can even call it that) that is just the most popular products in Month 16.  Built the solution using command line tools. Got position 743 with performance of 0.0137986.
-ksb_model3: same as ksb_model2 except deduping products that a customer already has in month 17.  See command_line_tools.txt and ksb_model3.R and postprocess_mysolutioncsv.awk.  Oddly, the performance was only 0.0019652.  That is a head-scratcher because it should be exactly the same as ksb_model2 except dropping folks existing products.  Tomorrow I need to hand audit a few records and also confirm my understanding of the "added products" concept.
-
+ksb_model3: same as ksb_model2 except deduping products that a customer already has in month 17.  See command_line_tools.txt and ksb_model3.R and postprocess_mysolutioncsv.awk.  The performance was 0.016901.  That is an improvement over ksb_model2 of .0031024 - which thankfully makes sense since this is just a deduping of ksb_model2.

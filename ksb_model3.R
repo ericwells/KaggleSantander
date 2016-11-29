@@ -89,7 +89,7 @@ sort.recommendations <- function(passed_vector) {
 get.ordered.recommendations <- function(df) {
 	output <- vector(mode="character", length = nrow(df))
 	for (i in 1:nrow(df)){
-		temp <- c(df[i,48], df[i,49], df[i,50],  df[i,51],  df[i,52],  df[i,53],  df[i,54],  df[i,55],  df[i,56],  df[i,57],  df[i,58],  df[i,59],  df[i,60],  df[i,61],  df[i,62],  df[i,63],  df[i,64],  df[i,65],  df[i,66],  df[i,67],  df[i,68],  df[i,69],  df[i,70], df[i,71])
+		temp <- c(df[i,26], df[i,27], df[i,28], df[i,29],  df[i,30],  df[i,31],  df[i,32],  df[i,33],  df[i,34],  df[i,35],  df[i,36],  df[i,37],  df[i,38],  df[i,39],  df[i,40],  df[i,41],  df[i,42],  df[i,43],  df[i,44],  df[i,45],  df[i,46],  df[i,47],  df[i,48],  df[i,49])
 		output[i] <- sort.recommendations(temp)
 	}
 	return(output)
