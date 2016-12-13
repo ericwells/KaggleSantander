@@ -1,0 +1,12 @@
+# manual_melting.txt
+# By running these commands in the shell in this order, I will manually melt the Kaggle Santander train_ver2 dataset
+
+# sort on month and ID
+
+# split into separate files for each month and drop the demographic columns from being repeating
+
+# left outer join 17 times
+
+# The result should be a single file with a single row for each customer. Only customers who are present in month 17 should be on the file. Order of columns is left to right, Month 1 to Month 17.  
+# logistic (target=ColX(of M17), predictors = colsX:Y(of M16:M11))]
+# predict (predictors = colsX:Y(of M17:M12))

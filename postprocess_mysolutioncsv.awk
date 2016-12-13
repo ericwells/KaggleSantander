@@ -28,4 +28,4 @@ gsub("P1","ind_ahor_fin_ult1");
 print $0}
 
 # reminder on how to run it:  awk -f test.awk test.csv > output.csv
-# awk -f postprocess_mysolutioncsv.awk ../ksb_model3_solution_temp.csv > ../ksb_model3_solution.csv
+# awk -f postprocess_mysolutioncsv.awk ../ksb_model4_solution_temp.csv > ../ksb_model4_solution.csv
