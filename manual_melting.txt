@@ -2,6 +2,8 @@
 # By running these commands in the shell in this order, I will manually melt the Kaggle Santander train_ver2 dataset
 
 # sort on month and ID
+tail -n +2 train_ver2.csv > step1.csv
+sort -t, -n -k2,3 step1.csv  # check the column positions
 
 # split into separate files for each month and drop the demographic columns from being repeating
 
@@ -10,3 +12,16 @@
 # The result should be a single file with a single row for each customer. Only customers who are present in month 17 should be on the file. Order of columns is left to right, Month 1 to Month 17.  
 # logistic (target=ColX(of M17), predictors = colsX:Y(of M16:M11))]
 # predict (predictors = colsX:Y(of M17:M12))
+
+
+### SCRATCHPAD
+
+Get rid of header row:
+tail -n +2 oldfile >newfile
+Then sort:
+sort -t, -n -k2,2 Month17NoHeader.csv > Month17SortedNoHeader.csv
+wc -l Month17SortedNoHeader.csv
+Then join to get the customers who are only on M18.
+join -t, -1 2 -2 2 -v1 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > newcustsM18.csv # Whoa.  There don't appear to be any.
+Then join to get the customers who are on M18 and M17.
+join -t"," -1 2 -2 2 Month18SortedNoHeader.csv Month17SortedNoHeader.csv > M18and17SortedNoHeader.csv # inner join
