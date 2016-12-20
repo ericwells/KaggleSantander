@@ -10,4 +10,4 @@ ksb_model4: same as ksb_model3 but now segmented into three segments based on ti
 ksb_model5: three segments on age<30, age 45+.  Performance is 0.0212888.
 ksb_model6: two segments on Gender.  Performance is 0.0219886. 
 ksb_model7: three segments on income <60K, income >200K.  Performance is 0.0218253.
-
+ksb_model12: after a couple weeks of work, first successful model based on logistic regression - yay!  HOWEVER, the performance was not an improvement - boo!  The performance was 0.019955.  Back to the drawing board...

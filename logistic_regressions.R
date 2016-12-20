@@ -140,8 +140,6 @@ training <- rename(training, c(
   "ind_ahor_fin_ult1.2016-04-28"="P1", "ind_aval_fin_ult1.2016-04-28"="P2", "ind_cco_fin_ult1.2016-04-28"="P3", "ind_cder_fin_ult1.2016-04-28"="P4", "ind_cno_fin_ult1.2016-04-28"="P5", "ind_ctju_fin_ult1.2016-04-28"="P6", "ind_ctma_fin_ult1.2016-04-28"="P7", "ind_ctop_fin_ult1.2016-04-28"="P8", "ind_ctpp_fin_ult1.2016-04-28"="P9", "ind_deco_fin_ult1.2016-04-28"="P10", "ind_deme_fin_ult1.2016-04-28"="P11", "ind_dela_fin_ult1.2016-04-28"="P12", "ind_ecue_fin_ult1.2016-04-28"="P13", "ind_fond_fin_ult1.2016-04-28"="P14", "ind_hip_fin_ult1.2016-04-28"="P15", "ind_plan_fin_ult1.2016-04-28"="P16", "ind_pres_fin_ult1.2016-04-28"="P17", "ind_reca_fin_ult1.2016-04-28"="P18", "ind_tjcr_fin_ult1.2016-04-28"="P19", "ind_valo_fin_ult1.2016-04-28"="P20", "ind_viv_fin_ult1.2016-04-28"="P21", "ind_nomina_ult1.2016-04-28"="P22", "ind_nom_pens_ult1.2016-04-28"="P23", "ind_recibo_ult1.2016-04-28"="P24"                          
    ))
 
-# Note to self: remember to save the workspace at this point in the code.
-
 # And now build a scoring dataset that has appropriate names that the predict function expects.
 # All I need from test_ver2 is the list of IDs.  The predictors all come from months that are found on train_ver2.  Therefore I can build scoring from df4 (which was already merged against test_ver2 IDs).
 scoring <- data.frame(df4[,c(1,72:93,2:25)])
@@ -150,6 +148,8 @@ scoring <- rename(scoring, c(
   "ind_empleado.2016.05.28"="D1", "pais_residencia.2016.05.28"="D2", "sexo.2016.05.28"="D3", "age.2016.05.28"="D4", "fecha_alta.2016.05.28"="D5", "ind_nuevo.2016.05.28"="D6", "antiguedad.2016.05.28"="D7", "indrel.2016.05.28"="D8", "ult_fec_cli_1t.2016.05.28"="D9", "indrel_1mes.2016.05.28"="D10", "tiprel_1mes.2016.05.28"="D11", "indresi.2016.05.28"="D12", "indext.2016.05.28"="D13", "conyuemp.2016.05.28"="D14", "canal_entrada.2016.05.28"="D15", "indfall.2016.05.28"="D16", "tipodom.2016.05.28"="D17", "cod_prov.2016.05.28"="D18", "nomprov.2016.05.28"="D19", "ind_actividad_cliente.2016.05.28"="D20", "renta.2016.05.28"="D21", "segmento.2016.05.28"="D22",
   "ind_ahor_fin_ult1.2016.05.28"="P1", "ind_aval_fin_ult1.2016.05.28"="P2", "ind_cco_fin_ult1.2016.05.28"="P3", "ind_cder_fin_ult1.2016.05.28"="P4", "ind_cno_fin_ult1.2016.05.28"="P5", "ind_ctju_fin_ult1.2016.05.28"="P6", "ind_ctma_fin_ult1.2016.05.28"="P7", "ind_ctop_fin_ult1.2016.05.28"="P8", "ind_ctpp_fin_ult1.2016.05.28"="P9", "ind_deco_fin_ult1.2016.05.28"="P10", "ind_deme_fin_ult1.2016.05.28"="P11", "ind_dela_fin_ult1.2016.05.28"="P12", "ind_ecue_fin_ult1.2016.05.28"="P13", "ind_fond_fin_ult1.2016.05.28"="P14", "ind_hip_fin_ult1.2016.05.28"="P15", "ind_plan_fin_ult1.2016.05.28"="P16", "ind_pres_fin_ult1.2016.05.28"="P17", "ind_reca_fin_ult1.2016.05.28"="P18", "ind_tjcr_fin_ult1.2016.05.28"="P19", "ind_valo_fin_ult1.2016.05.28"="P20", "ind_viv_fin_ult1.2016.05.28"="P21", "ind_nomina_ult1.2016.05.28"="P22", "ind_nom_pens_ult1.2016.05.28"="P23", "ind_recibo_ult1.2016.05.28"="P24"
 ))
+
+# Note to self: remember to save the workspace at this point in the code.
 
 # TODO:  May need to strip out the products that don't have enough data in the target.  Could then basically assume their prob is zero.
 # let's take a quick check...
@@ -192,12 +192,12 @@ for (i in 2:25){
 #my_formula <- as.factor(T3)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
 #my_formula <- as.factor(T3)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
 #my_formula <- as.factor(T3)~D3+D4+D7+D15+D21+P1+P2+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
-my_formula <- as.factor(T3)~D4+D7+D15+P5+P8+P9+P11+P12+P13+P14+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T3)~D4+D7+D15+P5+P8+P9+P11+P12+P13+P14+P18+P19+P20+P21+P22+P23+P24 # final vars in the model.
 model12_T3 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
-summary(model12_T3)
+summary(model12_T3) # Note: Deviance - lower is better. "Null deviance" is just using the intercept. "Residual deviance" includes using the predictors.  AIC: only useful for comparing models on the same target - lower is better.
 
-# In order to get the predict function to work, need to check for any factor levels that didn't exist in training and convert to NA.
-# I think I can skip this step now...
+# In order to get the predict function to work, we generally need to check for any factor levels that didn't exist in training and convert to NA.
+# I think I can skip this step in my program since I did data cleansing on scoring along with training.
 #id <- which(!(scoring$D1 %in% levels(training$D1)))
 #scoring$D1[id] <- NA
 
@@ -214,12 +214,252 @@ head(PrT3,n=50L)
 summary(PrT3)
 # Yes, for T3 they are in range 0-1.
 
-# TODO: figure out how to run all 24 predictions and get them in the right place.
+# Need to figure out how to run all 24 predictions and get them in the right place.
 # My initial thought here is that each of the 24 predictions ultimately be selecting different predictors.  Even though is will add many lines of code, perhaps it would be good to build each of the 24 models manually.
 # So could have "model12_T1", "model12_T2", ..., "model12_T24".
 
-# TODO: consider bringing in the stuff that creates the Kaggle submission file.
-# get from ksb5and6and7.R
+# Here is the section where I will run the logistic regression for products 3 (already done above), 5, 8, 9, 12, 13, 14, 18, 19, 20, 22, 23, and 24.
+
+# Product 5
+#my_formula <- as.factor(T5)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T5)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T5)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T5)~D4+D7+D15+P3+P8+P9+P12+P13+P18+P19+P23+P24 # final vars in the model.
+model12_T5 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T5)
+PrT5 <- predict(model12_T5, newdata = scoring, type="response", na.action=na.omit)
+head(PrT5,n=50L)
+summary(PrT5)
+
+# Product 8
+#my_formula <- as.factor(T8)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T8)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T8)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T8)~D4+D15+D21+P3+P5+P7+P10+P11+P12+P13+P14+P15+P17+P20+P21+P22+P23 # final vars in the model.
+model12_T8 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T8)
+PrT8 <- predict(model12_T8, newdata = scoring, type="response", na.action=na.omit)
+head(PrT8,n=50L)
+summary(PrT8)
+
+# Product 9
+#my_formula <- as.factor(T9)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T9)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T9)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T9)~D15+D21+P3+P5+P7+P12+P13+P14+P15+P16+P18+P19+P20+P21+P24 # final vars in the model.
+model12_T9 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T9)
+PrT9 <- predict(model12_T9, newdata = scoring, type="response", na.action=na.omit)
+head(PrT9,n=50L)
+summary(PrT9)
+
+# Product 12
+#my_formula <- as.factor(T12)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T12)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T12)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T12)~D4+D7+D15+D21+P1+P3+P5+P8+P9+P10+P11+P13+P14+P17+P18+P19+P24 # final vars in the model.
+model12_T12 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T12)
+PrT12 <- predict(model12_T12, newdata = scoring, type="response", na.action=na.omit)
+head(PrT12,n=50L)
+summary(PrT12)
+
+# Product 13
+#my_formula <- as.factor(T13)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T13)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T13)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T13)~D4+D7+D15+D21+P3+P5+P6+P7+P8+P9+P12+P14+P16+P17+P18+P19+P20+P21+P22+P23+P24 # final vars in the model.
+model12_T13 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T13)
+PrT13 <- predict(model12_T13, newdata = scoring, type="response", na.action=na.omit)
+head(PrT13,n=50L)
+summary(PrT13)
+
+# Product 14
+#my_formula <- as.factor(T14)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T14)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T14)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P15+P16+P17+P18+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T14)~D4+D15+D21+P3+P5+P8+P9+P12+P13+P15+P16+P20 # final vars in the model.
+model12_T14 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T14)
+PrT14 <- predict(model12_T14, newdata = scoring, type="response", na.action=na.omit)
+head(PrT14,n=50L)
+summary(PrT14)
+
+# Product 18
+#my_formula <- as.factor(T18)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T18)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T18)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P19+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T18)~D4+D7+D15+D21+P3+P5+P9+P12+P13+P15+P17+P19+P20+P21+P22+P23+P24 # final vars in the model.
+model12_T18 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T18)
+PrT18 <- predict(model12_T18, newdata = scoring, type="response", na.action=na.omit)
+head(PrT18,n=50L)
+summary(PrT18)
+
+# Product 19
+#my_formula <- as.factor(T19)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T19)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T19)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P20+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T19)~D4+D15+D21+P3+P5+P7+P8+P9+P12+P13+P16+P18+P20+P21+P23+P24 # final vars in the model.
+model12_T19 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T19)
+PrT19 <- predict(model12_T19, newdata = scoring, type="response", na.action=na.omit)
+head(PrT19,n=50L)
+summary(PrT19)
+
+# Product 20
+#my_formula <- as.factor(T20)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T20)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T20)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P21+P22+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T20)~D4+D15+D21+P3+P4+P5+P7+P8+P9+P10+P13+P14+P16+P18+P19+P22+P23+P24 # final vars in the model.
+model12_T20 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T20)
+PrT20 <- predict(model12_T20, newdata = scoring, type="response", na.action=na.omit)
+head(PrT20,n=50L)
+summary(PrT20)
+
+# Product 22
+#my_formula <- as.factor(T22)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T22)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T22)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P23+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T22)~D4+D7+D15+P5+P7+P8+P9+P13+P15+P18+P19+P23+P24 # final vars in the model.
+model12_T22 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T22)
+PrT22 <- predict(model12_T22, newdata = scoring, type="response", na.action=na.omit)
+head(PrT22,n=50L)
+summary(PrT22)
+
+# Product 23
+#my_formula <- as.factor(T23)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T23)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T23)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P24 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T23)~D4+D7+D15+P5+P6+P9+P13+P15+P18+P19+P20+P22+P24 # final vars in the model.
+model12_T23 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T23)
+PrT23 <- predict(model12_T23, newdata = scoring, type="response", na.action=na.omit)
+head(PrT23,n=50L)
+summary(PrT23)
+
+# Product 24
+#my_formula <- as.factor(T24)~D3+D4 # a baby model to test the syntax. D3 is Sexo, D4 is Age. 
+#my_formula <- as.factor(T24)~D3+D4+D7+D15+D21 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+#my_formula <- as.factor(T24)~D3+D4+D7+D15+D21+P1+P2+P3+P4+P5+P6+P7+P8+P9+P10+P11+P12+P13+P14+P15+P16+P17+P18+P19+P20+P21+P22+P23 # a model to test what happens if just using the good demographic predictors. D3 is Sexo, D4 is Age, D7 is Antiguedad (time as customer), D15 is canal-entrada (channel), D21 is renta (income).
+my_formula <- as.factor(T24)~D4+D7+D15+D21+P3+P5+P7+P9+P12+P13+P15+P16+P18+P19+P20+P22+P23 # final vars in the model.
+model12_T24 <- glm(formula = my_formula, family = binomial(link = "logit"), data = training, trace=TRUE, maxit=25, na.action=na.omit)
+summary(model12_T24)
+PrT24 <- predict(model12_T24, newdata = scoring, type="response", na.action=na.omit)
+head(PrT24,n=50L)
+summary(PrT24)
+
+# For my initial pass at the logistic regression approach, some of the targets are useless so I will just fill the Probabilities for those products manually to all zeros.
+PrT1 <- vector(mode = "numeric", length = 929615)
+PrT2 <- vector(mode = "numeric", length = 929615)
+PrT4 <- vector(mode = "numeric", length = 929615)
+PrT6 <- vector(mode = "numeric", length = 929615)
+PrT7 <- vector(mode = "numeric", length = 929615)
+PrT10 <- vector(mode = "numeric", length = 929615)
+PrT11 <- vector(mode = "numeric", length = 929615)
+PrT15 <- vector(mode = "numeric", length = 929615)
+PrT16 <- vector(mode = "numeric", length = 929615)
+PrT17 <- vector(mode = "numeric", length = 929615)
+PrT21 <- vector(mode = "numeric", length = 929615)
+
+# And now put it all onto Scoring.
+scoring$Pr1 <- PrT1
+scoring$Pr2 <- PrT2
+scoring$Pr3 <- PrT3
+scoring$Pr4 <- PrT4
+scoring$Pr5 <- PrT5
+scoring$Pr6 <- PrT6
+scoring$Pr7 <- PrT7
+scoring$Pr8 <- PrT8
+scoring$Pr9 <- PrT9
+scoring$Pr10 <- PrT10
+scoring$Pr11 <- PrT11
+scoring$Pr12 <- PrT12
+scoring$Pr13 <- PrT13
+scoring$Pr14 <- PrT14
+scoring$Pr15 <- PrT15
+scoring$Pr16 <- PrT16
+scoring$Pr17 <- PrT17
+scoring$Pr18 <- PrT18
+scoring$Pr19 <- PrT19
+scoring$Pr20 <- PrT20
+scoring$Pr21 <- PrT21
+scoring$Pr22 <- PrT22
+scoring$Pr23 <- PrT23
+scoring$Pr24 <- PrT24
+
+# Note to self: this would be a good place to save off the workspace.
+
+# Clean up workspace before running the last heavy computation.
+rm(model12_T12); rm(model12_T13); rm(model12_T14); rm(model12_T18); rm(model12_T19); rm(model12_T20); rm(model12_T22); rm(model12_T23); rm(model12_T24); rm(model12_T3); rm(model12_T5); rm(model12_T8); rm(model12_T9)
+rm(list=ls(pattern='^PrT'))
+
+# got the next section from ksb5and6and7.R which was already working on my earlier non-regression models.
+scoring_copy <- scoring
+# Overwrite Product Probabilities to zero if the customer already has the product in Month 2016-05.
+scoring_copy$Pr1 <- (1-scoring_copy$P1)*scoring_copy$Pr1
+scoring_copy$Pr2 <- (1-scoring_copy$P2)*scoring_copy$Pr2
+scoring_copy$Pr3 <- (1-scoring_copy$P3)*scoring_copy$Pr3
+scoring_copy$Pr4 <- (1-scoring_copy$P4)*scoring_copy$Pr4
+scoring_copy$Pr5 <- (1-scoring_copy$P5)*scoring_copy$Pr5
+scoring_copy$Pr6 <- (1-scoring_copy$P6)*scoring_copy$Pr6
+scoring_copy$Pr7 <- (1-scoring_copy$P7)*scoring_copy$Pr7
+scoring_copy$Pr8 <- (1-scoring_copy$P8)*scoring_copy$Pr8
+scoring_copy$Pr9 <- (1-scoring_copy$P9)*scoring_copy$Pr9
+scoring_copy$Pr10 <- (1-scoring_copy$P10)*scoring_copy$Pr10
+scoring_copy$Pr11 <- (1-scoring_copy$P11)*scoring_copy$Pr11
+scoring_copy$Pr12 <- (1-scoring_copy$P12)*scoring_copy$Pr12
+scoring_copy$Pr13 <- (1-scoring_copy$P13)*scoring_copy$Pr13
+scoring_copy$Pr14 <- (1-scoring_copy$P14)*scoring_copy$Pr14
+scoring_copy$Pr15 <- (1-scoring_copy$P15)*scoring_copy$Pr15
+scoring_copy$Pr16 <- (1-scoring_copy$P16)*scoring_copy$Pr16
+scoring_copy$Pr17 <- (1-scoring_copy$P17)*scoring_copy$Pr17
+scoring_copy$Pr18 <- (1-scoring_copy$P18)*scoring_copy$Pr18
+scoring_copy$Pr19 <- (1-scoring_copy$P19)*scoring_copy$Pr19
+scoring_copy$Pr20 <- (1-scoring_copy$P20)*scoring_copy$Pr20
+scoring_copy$Pr21 <- (1-scoring_copy$P21)*scoring_copy$Pr21
+scoring_copy$Pr22 <- (1-scoring_copy$P22)*scoring_copy$Pr22
+scoring_copy$Pr23 <- (1-scoring_copy$P23)*scoring_copy$Pr23
+scoring_copy$Pr24 <- (1-scoring_copy$P24)*scoring_copy$Pr24
+head(scoring_copy, n=10L)
+
+# Define function to sort recommendations and return top 7.
+sort.recommendations <- function(passed_vector) {
+  # takes in a row of data for a single customer (of length exactly 24 (for 24 products)) creates a temp array, sorts the array, returns the array.
+  x <- data.frame(Product = c("P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20","P21","P22","P23","P24"), Probs = passed_vector, stringsAsFactors=FALSE)
+  y <- x[order(-x$Probs),1] 
+  w <- paste(y[1],y[2],y[3],y[4],y[5],y[6],y[7])
+  return(w)
+}
+
+# Define function to return ordered recommendations from a scored test file.
+get.ordered.recommendations <- function(df) {
+  output <- vector(mode="character", length = nrow(df))
+  for (i in 1:nrow(df)){
+    temp <- c(df[i,48], df[i,49], df[i,50], df[i,51],  df[i,52],  df[i,53],  df[i,54],  df[i,55],  df[i,56],  df[i,57],  df[i,58],  df[i,59],  df[i,60],  df[i,61],  df[i,62],  df[i,63],  df[i,64],  df[i,65],  df[i,66],  df[i,67],  df[i,68],  df[i,69],  df[i,70],  df[i,71])
+    output[i] <- sort.recommendations(temp)
+  }
+  return(output)
+}
+
+# Create the added_products column.
+scoring_copy$added_products <- get.ordered.recommendations(scoring_copy)
+
+# Take a look...
+head(scoring_copy, n=2L)
+
+# Write to my_solution.csv.
+#my_solution <- df[,c(1,50)] # grab just ncodpers and added_products
+my_solution <- data.frame(scoring_copy$ncodpers, scoring_copy$added_products, stringsAsFactors = FALSE)
+write.csv(my_solution, file = "../ksb_model12_solution_temp.csv", row.names = FALSE, quote = FALSE) 
+
+# Note to self: save the workspace one more time (model12_finished_workspace)
+
+# Don't forget the final clean-up step using postprocess_mysolutioncsv.awk!!
+
 
 ### SCRATCHPAD
 df[df$ncodpers==1050934,c(1:5,783)]
@@ -235,3 +475,4 @@ model11$coefficients
 write.csv(header_names, file = "../headernamesofdf6.csv", row.names = FALSE, quote = FALSE) 
 l<-sapply(training,function(x)is.factor(x))
 l
+
